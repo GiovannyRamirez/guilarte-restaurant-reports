@@ -4,7 +4,7 @@ const { QUERIES } = require("../queries")
 module.exports = {
     async TOP_MENUS (req, res) {
         try {
-            const { body: { startDate, endDate, telCliente } } = req
+            const { query: { startDate, endDate, telCliente } } = req
             const topConsumo = await pool.query(QUERIES.GET_TOP_MENUS_BY_CLIENT(startDate, endDate, telCliente))
             return res.status(200).json({
                 topConsumo,
@@ -18,7 +18,7 @@ module.exports = {
     },
     async TOP_PAID_CLIENTS (req, res) {
         try {
-            const { body: { startDate, endDate } } = req
+            const { query: { startDate, endDate } } = req
             const topPagos = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_VALUE(startDate, endDate))
             return res.status(200).json({
                 topPagos,
@@ -32,7 +32,7 @@ module.exports = {
     },
     async TOP_ORDERS_CLIENTS (req, res) {
         try {
-            const { body: { startDate, endDate } } = req
+            const { query: { startDate, endDate } } = req
             const topOrdenes = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_ORDERS(startDate, endDate))
             return res.status(200).json({
                 topOrdenes,
