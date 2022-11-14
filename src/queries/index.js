@@ -23,12 +23,18 @@ module.exports = {
             AND c.telefono_cliente = ${telCliente}
             GROUP BY m.id_menu, c.nombre_cliente 
             ORDER BY SUM(osm.cantidad_menu_en_orden) DESC`,
-        GET_TOP_CLIENT_BY_VALUE: (startDate, endDate) => `SELECT c.nombre_cliente, c.telefono_cliente, SUM(os.valor_pagado) AS "Total Pagado", COUNT(DISTINCT(os.id_orden)) AS "Número de órdenes" FROM ${ORDERS_MENUS} osm 
+        GET_TOP_CLIENTS_BY_VALUE: (startDate, endDate) => `SELECT c.nombre_cliente, c.telefono_cliente, SUM(os.valor_pagado) AS "Total Pagado", COUNT(DISTINCT(os.id_orden)) AS "Número de órdenes" FROM ${ORDERS_MENUS} osm 
             JOIN ${ORDERS} os ON osm.id_orden = os.id_orden 
             JOIN ${CLIENTES} c ON os.id_cliente = c.id_cliente 
             WHERE os.fecha_orden BETWEEN "${startDate} 00:00:01" AND "${endDate} 23:59:59"
             GROUP BY c.id_cliente
             ORDER BY SUM(os.valor_pagado) DESC`,
+        GET_TOP_CLIENTS_BY_ORDERS: (startDate, endDate) => `SELECT c.nombre_cliente, c.telefono_cliente, COUNT(DISTINCT(os.id_orden)) AS "Número de órdenes", SUM(os.valor_pagado) AS "Total Pagado" FROM ${ORDERS_MENUS} osm 
+            JOIN ${ORDERS} os ON osm.id_orden = os.id_orden 
+            JOIN ${CLIENTES} c ON os.id_cliente = c.id_cliente 
+            WHERE os.fecha_orden BETWEEN "${startDate} 00:00:01" AND "${endDate} 23:59:59"
+            GROUP BY c.id_cliente
+            ORDER BY COUNT(DISTINCT(os.id_orden)) DESC`,
         // GET_MESAS: `SELECT * FROM ${MESAS}`,
         // GET_MESEROS: `SELECT * FROM ${MESEROS}`,
         // GET_TIPOS_SERVICIO: `SELECT * FROM ${TIPOS_SERVICIO}`,

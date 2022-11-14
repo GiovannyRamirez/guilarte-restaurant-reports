@@ -19,9 +19,23 @@ module.exports = {
     async TOP_PAID_CLIENTS (req, res) {
         try {
             const { body: { startDate, endDate } } = req
-            const topPagos = await pool.query(QUERIES.GET_TOP_CLIENT_BY_VALUE(startDate, endDate))
+            const topPagos = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_VALUE(startDate, endDate))
             return res.status(200).json({
                 topPagos,
+            })
+        } catch (err) {
+            return res.status(400).json({
+                mensaje: "Hubo un error con la petición",
+                error: JSON.stringify(err),
+            })
+        }
+    },
+    async TOP_ORDERS_CLIENTS (req, res) {
+        try {
+            const { body: { startDate, endDate } } = req
+            const topOrdenes = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_ORDERS(startDate, endDate))
+            return res.status(200).json({
+                topOrdenes,
             })
         } catch (err) {
             return res.status(400).json({

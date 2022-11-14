@@ -5,5 +5,6 @@ module.exports = {
         MOST_VALUED_MENUS: "/valorados",
         MENU_TYPES: "/tipos/menus",
         CLIENTES: "/clientes",
+        MOST_ORDERS: "/ordenes",
     },
 }
