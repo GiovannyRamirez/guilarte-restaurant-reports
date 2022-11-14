@@ -8,7 +8,7 @@ module.exports = {
             const topConsumo = await pool.query(QUERIES.GET_TOP_MENUS_BY_CLIENT(startDate, endDate, telCliente))
             return res.status(200).json({
                 results: topConsumo,
-                xAxis: "nombre_cliente",
+                xAxis: "nombre_menu",
                 yAxis: "Total Ordenado",
             })
         } catch (err) {
