@@ -8,6 +8,8 @@ module.exports = {
             const topConsumo = await pool.query(QUERIES.GET_TOP_MENUS(startDate, endDate))
             return res.status(200).json({
                 results: topConsumo,
+                xAxis: "nombre_menu",
+                yAxis: "Total Ordenado",
             })
         } catch (err) {
             return res.status(400).json({
@@ -22,6 +24,8 @@ module.exports = {
             const topValor = await pool.query(QUERIES.GET_MOST_VALUED_MENUS(startDate, endDate))
             return res.status(200).json({
                 results: topValor,
+                xAxis: "nombre_menu",
+                yAxis: "Valor representado",
             })
         } catch (err) {
             return res.status(400).json({
