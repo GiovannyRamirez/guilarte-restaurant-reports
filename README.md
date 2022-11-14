@@ -12,8 +12,14 @@ tags:
 
 This launch a server with routes to get statistics from
   - Menus
+    - Top Consumed
+    - Top Valued
   - Customers
+    - Top Orders
+    - Top Paid
+    - Top Menus by Client
   - Menu Types
+    - Top Consumed
 
 # How to use
 
