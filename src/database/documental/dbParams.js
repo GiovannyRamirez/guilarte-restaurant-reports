@@ -1,6 +1,14 @@
 module.exports = {
     REPORTS: {
-        MENUS: "menus",
+        MENUS: {
+            REPORTS: {
+                CONSUMED: {
+                    NAME: "Top Menús Consumidos",
+                    XAXIS: "nombre_menu",
+                    YAXIS: "Total Ordenado",
+                },
+            },
+        },
         MENU_TYPES: {
             REPORTS: {
                 TYPES: {
@@ -28,8 +36,6 @@ module.exports = {
                     YAXIS: "Número de órdenes",
                 },
             },
-        },        
-        ORDERS: "ordenes_servicio",
-        ORDERS_MENUS: "ordenes_servicio_menus",
+        },
     },
 }

@@ -15,11 +15,11 @@ module.exports = {
             const mostConsumed = topConsumo[0]
             const lessConsumed = topConsumo[topConsumo.length - 1]
             const saveMost = await Data.create({
-                name: mostConsumed.nombre_menu,
+                name: mostConsumed[REPORTS.CUSTOMERS.REPORTS.MENUS.XAXIS],
                 total: mostConsumed[REPORTS.CUSTOMERS.REPORTS.MENUS.YAXIS],
             })
             const saveLess = await Data.create({
-                name: lessConsumed.nombre_menu,
+                name: lessConsumed[REPORTS.CUSTOMERS.REPORTS.MENUS.XAXIS],
                 total: lessConsumed[REPORTS.CUSTOMERS.REPORTS.MENUS.YAXIS],
             })
             const saveReport = await Report.create({
@@ -32,7 +32,7 @@ module.exports = {
             })
             await topConsumo.forEach(async item => {
                 const saveTop = await Data.create({
-                    name: item.nombre_menu,
+                    name: item[REPORTS.CUSTOMERS.REPORTS.MENUS.XAXIS],
                     total: item[REPORTS.CUSTOMERS.REPORTS.MENUS.YAXIS],
                 })
                 const currentReport = await Report.findById(saveReport._id)
@@ -62,11 +62,11 @@ module.exports = {
             const mostPaid = topPagos[0]
             const lessPaid = topPagos[topPagos.length - 1]
             const saveMost = await Data.create({
-                name: mostPaid.nombre_cliente,
+                name: mostPaid[REPORTS.CUSTOMERS.REPORTS.PAYS.XAXIS],
                 total: mostPaid[REPORTS.CUSTOMERS.REPORTS.PAYS.YAXIS],
             })
             const saveLess = await Data.create({
-                name: lessPaid.nombre_cliente,
+                name: lessPaid[REPORTS.CUSTOMERS.REPORTS.PAYS.XAXIS],
                 total: lessPaid[REPORTS.CUSTOMERS.REPORTS.PAYS.YAXIS],
             })
             const saveReport = await Report.create({
@@ -78,7 +78,7 @@ module.exports = {
             })
             await topPagos.forEach(async item => {
                 const saveTop = await Data.create({
-                    name: item.nombre_cliente,
+                    name: item[REPORTS.CUSTOMERS.REPORTS.PAYS.XAXIS],
                     total: item[REPORTS.CUSTOMERS.REPORTS.PAYS.YAXIS],
                 })
                 const currentReport = await Report.findById(saveReport._id)
@@ -108,11 +108,11 @@ module.exports = {
             const mostOrders = topOrdenes[0]
             const lessOrders = topOrdenes[topOrdenes.length - 1]
             const saveMost = await Data.create({
-                name: mostOrders.nombre_cliente,
+                name: mostOrders[REPORTS.CUSTOMERS.REPORTS.ORDERS.XAXIS],
                 total: mostOrders[REPORTS.CUSTOMERS.REPORTS.ORDERS.YAXIS],
             })
             const saveLess = await Data.create({
-                name: lessOrders.nombre_cliente,
+                name: lessOrders[REPORTS.CUSTOMERS.REPORTS.ORDERS.XAXIS],
                 total: lessOrders[REPORTS.CUSTOMERS.REPORTS.ORDERS.YAXIS],
             })
             const saveReport = await Report.create({
@@ -124,7 +124,7 @@ module.exports = {
             })
             await topOrdenes.forEach(async item => {
                 const saveTop = await Data.create({
-                    name: item.nombre_cliente,
+                    name: item[REPORTS.CUSTOMERS.REPORTS.ORDERS.XAXIS],
                     total: item[REPORTS.CUSTOMERS.REPORTS.ORDERS.YAXIS],
                 })
                 const currentReport = await Report.findById(saveReport._id)

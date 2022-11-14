@@ -15,11 +15,11 @@ module.exports = {
             const mostConsumed = topTiposMenu[0]
             const lessConsumed = topTiposMenu[topTiposMenu.length - 1]
             const saveMost = await Data.create({
-                name: mostConsumed.nombre_tipo_menu,
+                name: mostConsumed[REPORTS.MENU_TYPES.REPORTS.TYPES.XAXIS],
                 total: mostConsumed[REPORTS.MENU_TYPES.REPORTS.TYPES.YAXIS],
             })
             const saveLess = await Data.create({
-                name: lessConsumed.nombre_tipo_menu,
+                name: lessConsumed[REPORTS.MENU_TYPES.REPORTS.TYPES.XAXIS],
                 total: lessConsumed[REPORTS.MENU_TYPES.REPORTS.TYPES.YAXIS],
             })
             const saveReport = await Report.create({
@@ -31,7 +31,7 @@ module.exports = {
             })
             await topTiposMenu.forEach(async item => {
                 const saveTop = await Data.create({
-                    name: item.nombre_tipo_menu,
+                    name: item[REPORTS.MENU_TYPES.REPORTS.TYPES.XAXIS],
                     total: item[REPORTS.MENU_TYPES.REPORTS.TYPES.YAXIS],
                 })
                 const currentReport = await Report.findById(saveReport._id)
