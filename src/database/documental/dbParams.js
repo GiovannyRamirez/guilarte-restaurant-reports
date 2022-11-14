@@ -10,7 +10,7 @@ module.exports = {
                 PAYS: {
                     NAME: "Top Menús Valorados",
                     XAXIS: "nombre_menu",
-                    YAXIS: "Total Ordenado",
+                    YAXIS: "Valor representado",
                 },
             },
         },
