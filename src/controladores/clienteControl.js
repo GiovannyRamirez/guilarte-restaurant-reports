@@ -58,6 +58,36 @@ module.exports = {
         try {
             const { query: { startDate, endDate } } = req
             const topPagos = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_VALUE(startDate, endDate))
+            const mostConsumed = topPagos[0]
+            const lessConsumed = topPagos[topPagos.length - 1]
+            const saveMost = await Data.create({
+                name: mostConsumed.nombre_cliente,
+                total: mostConsumed["Total Pagado"],
+            })
+            const saveLess = await Data.create({
+                name: lessConsumed.nombre_cliente,
+                total: lessConsumed["Total Pagado"],
+            })
+            const saveReport = await Report.create({
+                start_date: startDate,
+                end_date: endDate,
+                evaluated: topPagos.length,
+                most: [saveMost],
+                less: [saveLess],
+            })
+            await topPagos.forEach(async item => {
+                const saveTop = await Data.create({
+                    name: item.nombre_cliente,
+                    total: item["Total Pagado"],
+                })
+                const currentReport = await Report.findById(saveReport._id)
+                currentReport.top.push(saveTop)
+                await currentReport.save()
+            })
+            const fullCurrentReport = await Report.findById(saveReport._id)
+            const behavior = await Behavior.findOne({ name: "Top Clientes Valorados" })
+            behavior.reports.push(fullCurrentReport)
+            await behavior.save()
             return res.status(200).json({
                 results: topPagos,
                 xAxis: "nombre_cliente",
