@@ -1,4 +1,9 @@
 const pool = require("../database/transactional/dbConfig")
+
+const Behavior = require("../modelos/behavior")
+const Data = require("../modelos/data")
+const Report = require("../modelos/reports")
+
 const { QUERIES } = require("../queries")
 
 module.exports = {
@@ -6,6 +11,37 @@ module.exports = {
         try {
             const { query: { startDate, endDate, telCliente } } = req
             const topConsumo = await pool.query(QUERIES.GET_TOP_MENUS_BY_CLIENT(startDate, endDate, telCliente))
+            const mostConsumed = topConsumo[0]
+            const lessConsumed = topConsumo[topConsumo.length - 1]
+            const saveMost = await Data.create({
+                name: mostConsumed.nombre_menu,
+                total: mostConsumed["Total Ordenado"],
+            })
+            const saveLess = await Data.create({
+                name: lessConsumed.nombre_menu,
+                total: lessConsumed["Total Ordenado"],
+            })
+            const saveReport = await Report.create({
+                start_date: startDate,
+                end_date: endDate,
+                evaluated: topConsumo.length,
+                most: [saveMost],
+                less: [saveLess],
+                additional: `Teléfono Cliente: ${telCliente}`,
+            })
+            await topConsumo.forEach(async item => {
+                const saveTop = await Data.create({
+                    name: item.nombre_menu,
+                    total: item["Total Ordenado"],
+                })
+                const currentReport = await Report.findById(saveReport._id)
+                currentReport.top.push(saveTop)
+                await currentReport.save()
+            })
+            const fullCurrentReport = await Report.findById(saveReport._id)
+            const behavior = await Behavior.findOne({ name: "Top Menús Clientes" })
+            behavior.reports.push(fullCurrentReport)
+            await behavior.save()
             return res.status(200).json({
                 results: topConsumo,
                 xAxis: "nombre_menu",

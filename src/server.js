@@ -1,6 +1,8 @@
 require("dotenv").config()
 const express = require("express")
 
+const { documentalConnection } = require("./database/documental/dbConnect")
+
 const { ENDPOINTS } = require("./endpoints")
 const menuRutas = require("./rutas/menuRuta")
 const clienteRutas = require("./rutas/clienteRuta")
@@ -8,6 +10,7 @@ const tiposMenuRutas = require("./rutas/tiposMenuRuta")
 
 const PORT = process.env.PORT || 8000
 const app = express()
+documentalConnection()
 
 app.use(express.json())
 
