@@ -3,13 +3,19 @@ const { MENU, MENU_TYPES, CLIENTES, ORDERS, ORDERS_MENUS } = TABLE_NAMES
 
 module.exports = {
     QUERIES: {
-        GET_TOP_MENUS: (startDate, endDate) => `SELECT m.id_menu, m.nombre_menu, tm.nombre_tipo_menu, SUM(osm.cantidad_menu_en_orden) AS "Total Ordenado" FROM ${ORDERS} os
+        GET_TOP_MENUS: (startDate, endDate) => `SELECT m.nombre_menu, SUM(osm.cantidad_menu_en_orden) AS "Total Ordenado" FROM ${ORDERS} os
             JOIN ordenes_servicio_menus osm ON os.id_orden = osm.id_orden 
             JOIN ${MENU} m ON osm.id_menu = m.id_menu
-            JOIN ${MENU_TYPES} tm ON tm.id_tipo_menu = m.id_tipo_menu
             WHERE os.fecha_orden BETWEEN "${startDate} 00:00:01" AND "${endDate} 23:59:59"
             GROUP BY m.id_menu
             ORDER BY SUM(osm.cantidad_menu_en_orden) DESC`,
+        GET_MOST_VALUED_MENUS: (startDate, endDate) => `SELECT m.nombre_menu, SUM(osm.cantidad_menu_en_orden) AS "Total Ordenado", SUM(osm.cantidad_menu_en_orden * m.valor_menu) AS "Valor representado" FROM ${ORDERS} os
+            JOIN ${ORDERS_MENUS} osm ON os.id_orden = osm.id_orden 
+            JOIN ${MENU} m ON osm.id_menu = m.id_menu
+            WHERE os.fecha_orden BETWEEN "${startDate} 00:00:01" AND "${endDate} 23:59:59"
+            GROUP BY m.id_menu 
+            ORDER BY SUM(osm.cantidad_menu_en_orden * m.valor_menu) DESC`,
+        
         // GET_MESAS: `SELECT * FROM ${MESAS}`,
         // GET_MESEROS: `SELECT * FROM ${MESEROS}`,
         // GET_TIPOS_SERVICIO: `SELECT * FROM ${TIPOS_SERVICIO}`,
