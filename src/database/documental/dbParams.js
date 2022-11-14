@@ -1,7 +1,15 @@
 module.exports = {
     REPORTS: {
         MENUS: "menus",
-        MENU_TYPES: "tipos_menu",
+        MENU_TYPES: {
+            REPORTS: {
+                TYPES: {
+                    NAME: "Top Tipos Menú",
+                    XAXIS: "nombre_tipo_menu",
+                    YAXIS: "Total Vendido",
+                },
+            },
+        },
         CUSTOMERS: {
             REPORTS: {
                 MENUS: {
