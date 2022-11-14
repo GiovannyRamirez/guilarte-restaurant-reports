@@ -7,7 +7,7 @@ module.exports = {
             const { query: { startDate, endDate, telCliente } } = req
             const topConsumo = await pool.query(QUERIES.GET_TOP_MENUS_BY_CLIENT(startDate, endDate, telCliente))
             return res.status(200).json({
-                topConsumo,
+                results: topConsumo,
             })
         } catch (err) {
             return res.status(400).json({
@@ -21,7 +21,7 @@ module.exports = {
             const { query: { startDate, endDate } } = req
             const topPagos = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_VALUE(startDate, endDate))
             return res.status(200).json({
-                topPagos,
+                results: topPagos,
             })
         } catch (err) {
             return res.status(400).json({
@@ -35,7 +35,7 @@ module.exports = {
             const { query: { startDate, endDate } } = req
             const topOrdenes = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_ORDERS(startDate, endDate))
             return res.status(200).json({
-                topOrdenes,
+                results: topOrdenes,
             })
         } catch (err) {
             return res.status(400).json({

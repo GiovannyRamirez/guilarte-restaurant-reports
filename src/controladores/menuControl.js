@@ -7,7 +7,7 @@ module.exports = {
             const { query: { startDate, endDate } } = req
             const topConsumo = await pool.query(QUERIES.GET_TOP_MENUS(startDate, endDate))
             return res.status(200).json({
-                topConsumo,
+                results: topConsumo,
             })
         } catch (err) {
             return res.status(400).json({
@@ -21,7 +21,7 @@ module.exports = {
             const { query: { startDate, endDate } } = req
             const topValor = await pool.query(QUERIES.GET_MOST_VALUED_MENUS(startDate, endDate))
             return res.status(200).json({
-                topValor,
+                results: topValor,
             })
         } catch (err) {
             return res.status(400).json({
