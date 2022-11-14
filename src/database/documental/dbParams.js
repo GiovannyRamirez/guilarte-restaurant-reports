@@ -7,6 +7,11 @@ module.exports = {
                     XAXIS: "nombre_menu",
                     YAXIS: "Total Ordenado",
                 },
+                PAYS: {
+                    NAME: "Top Menús Valorados",
+                    XAXIS: "nombre_menu",
+                    YAXIS: "Total Ordenado",
+                },
             },
         },
         MENU_TYPES: {

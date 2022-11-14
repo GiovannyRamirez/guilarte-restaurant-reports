@@ -58,10 +58,40 @@ module.exports = {
         try {
             const { query: { startDate, endDate } } = req
             const topValor = await pool.query(QUERIES.GET_MOST_VALUED_MENUS(startDate, endDate))
+            const mostPaid = topValor[0]
+            const lessPaid = topValor[topValor.length - 1]
+            const saveMost = await Data.create({
+                name: mostPaid[REPORTS.MENUS.REPORTS.PAYS.XAXIS],
+                total: mostPaid[REPORTS.MENUS.REPORTS.PAYS.YAXIS],
+            })
+            const saveLess = await Data.create({
+                name: lessPaid[REPORTS.MENUS.REPORTS.PAYS.XAXIS],
+                total: lessPaid[REPORTS.MENUS.REPORTS.PAYS.YAXIS],
+            })
+            const saveReport = await Report.create({
+                start_date: startDate,
+                end_date: endDate,
+                evaluated: topValor.length,
+                most: [saveMost],
+                less: [saveLess],
+            })
+            await topValor.forEach(async item => {
+                const saveTop = await Data.create({
+                    name: item[REPORTS.MENUS.REPORTS.PAYS.XAXIS],
+                    total: item[REPORTS.MENUS.REPORTS.PAYS.YAXIS],
+                })
+                const currentReport = await Report.findById(saveReport._id)
+                currentReport.top.push(saveTop)
+                await currentReport.save()
+            })
+            const fullCurrentReport = await Report.findById(saveReport._id)
+            const behavior = await Behavior.findOne({ name: REPORTS.MENUS.REPORTS.PAYS.NAME })
+            behavior.reports.push(fullCurrentReport)
+            await behavior.save()
             return res.status(200).json({
                 results: topValor,
-                xAxis: "nombre_menu",
-                yAxis: "Valor representado",
+                xAxis: REPORTS.MENUS.REPORTS.PAYS.XAXIS,
+                yAxis: REPORTS.MENUS.REPORTS.PAYS.YAXIS,
             })
         } catch (err) {
             return res.status(400).json({
