@@ -9,9 +9,9 @@ module.exports = {
         password: process.env.DB_PASS,
     },
     TABLE_NAMES: {
-        MENU: "menus",
+        MENUS: "menus",
         MENU_TYPES: "tipos_menu",
-        CLIENTES: "clientes",
+        CUSTOMERS: "clientes",
         ORDERS: "ordenes_servicio",
         ORDERS_MENUS: "ordenes_servicio_menus",
     },

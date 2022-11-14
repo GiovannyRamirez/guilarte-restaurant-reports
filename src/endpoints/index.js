@@ -4,7 +4,7 @@ module.exports = {
         TOP_MENUS: "/menus",
         MOST_VALUED_MENUS: "/valorados",
         MENU_TYPES: "/tipos/menus",
-        CLIENTES: "/clientes",
+        CUSTOMERS: "/clientes",
         MOST_ORDERS: "/ordenes",
     },
 }
