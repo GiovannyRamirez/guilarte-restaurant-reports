@@ -8,6 +8,8 @@ module.exports = {
             const topConsumo = await pool.query(QUERIES.GET_TOP_MENUS_BY_CLIENT(startDate, endDate, telCliente))
             return res.status(200).json({
                 results: topConsumo,
+                xAxis: "nombre_cliente",
+                yAxis: "Total Ordenado",
             })
         } catch (err) {
             return res.status(400).json({
@@ -22,6 +24,8 @@ module.exports = {
             const topPagos = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_VALUE(startDate, endDate))
             return res.status(200).json({
                 results: topPagos,
+                xAxis: "nombre_cliente",
+                yAxis: "Total Pagado",
             })
         } catch (err) {
             return res.status(400).json({
@@ -36,6 +40,8 @@ module.exports = {
             const topOrdenes = await pool.query(QUERIES.GET_TOP_CLIENTS_BY_ORDERS(startDate, endDate))
             return res.status(200).json({
                 results: topOrdenes,
+                xAxis: "nombre_cliente",
+                yAxis: "Número de órdenes",
             })
         } catch (err) {
             return res.status(400).json({

@@ -8,6 +8,8 @@ module.exports = {
             const topTiposMenu = await pool.query(QUERIES.GET_TOP_MENU_TYPES(startDate, endDate))
             return res.status(200).json({
                 results: topTiposMenu,
+                xAxis: "nombre_tipo_menu",
+                yAxis: "Total Vendido",
             })
         } catch (err) {
             return res.status(400).json({
